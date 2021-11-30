@@ -1,0 +1,100 @@
+import java.io.*;
+class Bill
+{
+    String item[]={"Pasta","Cheese Pizza","Mini Burgers with Cheese","Corn Dogs","Grilled Chicken","Crispy Popcorn","Tempura Green Beans","Double Decker Chicken","Pav Bhaji","Samosa"};
+    double rate[]={100,102,103,104,105,106,107,108,50,10};
+    String order[]=new String[10];
+    double amt[]=new double[10];
+    String ans;
+    int plates[]=new int[10];
+    int i,n=0,no,z=0;
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    Bill()
+    {
+        
+    }
+    public void putOrder()throws IOException
+    {
+        System.out.println("*******************************************");
+        System.out.println("        Desalite Canteen - Menu Card       ");
+        System.out.println("*******************************************");
+        System.out.println("Item No.       Item       Rate/plate       ");
+        for(i=0;i<10;i++)
+        {
+            System.out.println((i+1)+":         "+item[i]+"--------"+rate[i]);
+        }
+        System.out.println("You have to order atleast 2 items.Enter item number to place order\n");
+        while(true)
+        {
+            if(z==10)
+            break;
+            System.out.println("Enter item number:");
+            no=Integer.parseInt(br.readLine());
+            order[z]=item[no-1];
+;
+            System.out.println("How many plates?:");
+            no=Integer.parseInt(br.readLine());
+            plates[z]=no;
+            z++;
+            System.out.println("Any More Item?(Y/N):");
+            ans=br.readLine().toUpperCase();
+            if(ans.equals("N"))
+            break;
+        }
+        showBill();
+    }
+    private void showBill()throws IOException
+    {
+        double bamt=0,b;
+        System.out.println("You have ordered\n");
+        System.out.println("Item   Rate   No. of plates");
+        for(i=0;i<z;i++)
+        {
+            System.out.println((i+1)+":"+order[i]+"---"+amt[i]+"---"+plates[i]);
+        }
+        while(true)
+        {
+            if(z<=1)
+            break;
+            System.out.println("Want to cancel any item(Y/N):");
+            ans=br.readLine().toUpperCase();
+            if(ans.equals("N"))
+            break;
+            System.out.println("Which item to cancel,enter item number:");
+            no=Integer.parseInt(br.readLine());
+            for(i=no-1;i<z;i++)
+            {
+                order[i]=order[i+1];
+                amt[i]=amt[i+1];
+                plates[i]=plates[i+1];
+                
+            }
+            z--;
+        }
+        System.out.println("Cash Memo\n");
+        System.out.println("******************************************************");
+        System.out.println("Item    No.of Plates    Rate    Amount\n");
+        System.out.println("******************************************************");
+        for(i=0;i<z;i++)
+        {
+            System.out.println(order[i]+"   "+plates[i]+"   "+amt[i]+"  ");
+            b=plates[i]*amt[i];
+            System.out.println(b);
+            bamt=bamt+b;
+        }
+        System.out.println("Bill Amount: Rs.            "+bamt);
+        System.out.println("********************");
+        if(bamt>=500)
+        bamt=bamt-bamt*.125;
+        System.out.println("Total Amount after discount @12.5%(if applicable)        "+bamt);
+        
+    }
+    public static void main(String args[])throws Exception
+    {
+        Bill ob=new Bill();
+        ob.putOrder();
+    }
+}
+    
+        
+         
